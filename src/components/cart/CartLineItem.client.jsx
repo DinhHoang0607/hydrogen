@@ -7,13 +7,30 @@ import {
   Image,
   Link,
 } from '@shopify/hydrogen';
+import axios from 'axios';
+import {useEffect, useState} from 'react';
 
 import {Heading, IconRemove, Text} from '~/components';
 
 export function CartLineItem() {
   const {linesRemove} = useCart();
   const {id: lineId, quantity, merchandise} = useCartLine();
+  // const [dataTest, setDataTest] = useState([]);
+  // useEffect(() => {
+  //   axios
+  //     .get('http://localhost:6767/listTable')
+  //     .then((response) => {
+  //       setDataTest(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.log(error);
+  //     });
 
+  //   // setDataTest(res);
+  // }, []);
+
+  // console.log(dataTest);
+  console.log(merchandise);
   return (
     <li key={lineId} className="flex gap-4">
       <div className="flex-shrink">
@@ -60,7 +77,7 @@ export function CartLineItem() {
             </button>
           </div>
         </div>
-        <Text>
+        <Text style={{textDecoration: 'line-through'}}>
           <CartLinePrice as="span" />
         </Text>
       </div>

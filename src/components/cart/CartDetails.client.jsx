@@ -1,4 +1,4 @@
-import {useRef} from 'react';
+import {useRef, useEffect, useState} from 'react';
 import {useScroll} from 'react-use';
 import {
   useCart,
@@ -8,11 +8,29 @@ import {
 } from '@shopify/hydrogen';
 
 import {Button, Text, CartLineItem, CartEmpty} from '~/components';
+import axios from 'axios';
 
 export function CartDetails({layout, onClose}) {
+  const [dataTest, setDataTest] = useState([]);
   const {lines} = useCart();
+  console.log(lines);
   const scrollRef = useRef(null);
   const {y} = useScroll(scrollRef);
+  // let dataTest = [];
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:6767/listTable')
+      .then((response) => {
+        setDataTest(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+
+    // setDataTest(res);
+  }, []);
+  console.log(dataTest);
 
   if (lines.length === 0) {
     return <CartEmpty onClose={onClose} layout={layout} />;
